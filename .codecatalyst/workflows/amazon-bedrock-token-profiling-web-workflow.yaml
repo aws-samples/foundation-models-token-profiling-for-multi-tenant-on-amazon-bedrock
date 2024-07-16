@@ -6,6 +6,34 @@ Triggers:
     Branches:
       - main
 Actions:
+  CDKBootstrap:
+    Identifier: aws/cdk-bootstrap@v1
+    Inputs:
+      Sources:
+        - WorkflowSource
+    Environment:
+      Name: amazon-bedrock-token-profiling-for-multi-tenant
+      Connections:
+        - Name: codecatalyst-account-connection
+          Role: codecatalyst-cdk-bootstrap-role
+    Configuration:
+      Region: us-east-2
+        
+  CDKDeploy:
+    Identifier: aws/cdk-deploy@v1
+    DependsOn: 
+      - CDKBootstrap
+    Environment:
+      Name: amazon-bedrock-token-profiling-for-multi-tenant
+      Connections:
+        - Name: codecatalyst-account-connection
+          Role: codecatalyst-cdk-deploy-role
+    Inputs:
+      Sources:
+        - WorkflowSource
+    Configuration:
+      StackName: my-app-stack
+      Region: us-west-2
   Build_b0:
     # Identifies the action. Do not modify this value.
     Identifier: aws/build@v1.0.0
@@ -25,6 +53,7 @@ Actions:
     Configuration:
       # Required - Steps are sequential instructions that run shell commands
       Steps:
+        - Run: export AWS_DEFAULT_REGION=us-east-1
         - Run: cd ./amazon-bedrock-token-profiling-web
         - Run: chmod +x deploy_stack.sh
         - Run: ./deploy_stack.sh
