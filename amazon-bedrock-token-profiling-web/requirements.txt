@@ -1,3 +1,2 @@
-aws-cdk-lib==2.114.1
+aws-cdk-lib==2.148.0
 constructs>=10.3.0
-
