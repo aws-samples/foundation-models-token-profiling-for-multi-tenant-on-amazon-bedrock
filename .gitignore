@@ -1,7 +1,10 @@
 # Byte-compiled / optimized / DLL files
-__pycache__/
+setup/static_example/__pycache__/
+setup/cdk.out/
+setup/cdk.out
 *.py[cod]
 *$py.class
+*.pyc
 
 # C extensions
 *.so
