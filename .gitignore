@@ -1,7 +1,6 @@
 # Byte-compiled / optimized / DLL files
-setup/static_example/__pycache__/
-setup/cdk.out/
-setup/cdk.out
+__pycache__/
+cdk.out/
 *.py[cod]
 *$py.class
 *.pyc
