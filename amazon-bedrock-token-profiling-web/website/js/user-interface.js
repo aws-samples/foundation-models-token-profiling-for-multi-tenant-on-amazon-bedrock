@@ -234,8 +234,8 @@ function ddb_cost_retrieval() {
 						<td>${rc['model_id']}</td>
 						<td>${rc['input_tokens']}</td>
 						<td>${rc['output_tokens']}</td>
-						<td>${rc['input_cost']}</td>
-						<td>${rc['output_cost']}</td>
+						<td>${'$' + parseFloat(rc['input_cost']).toFixed(2)}</td>
+						<td>${'$' + parseFloat(rc['output_cost']).toFixed(2)}</td>
 						<td>${rc['date']}</td>
 					</tr>`;
       }
