@@ -18,10 +18,10 @@ Actions:
           Role: codecatalyst-cdk-bootstrap-role
     Configuration:
       Region: us-east-2
-        
+
   CDKDeploy:
     Identifier: aws/cdk-deploy@v1
-    DependsOn: 
+    DependsOn:
       - CDKBootstrap
     Environment:
       Name: amazon-bedrock-token-profiling-for-multi-tenant
@@ -48,7 +48,6 @@ Actions:
         Enabled: true
         # Use as prefix for the report files
         ReportNamePrefix: rpt
-
     # Defines the action's properties.
     Configuration:
       # Required - Steps are sequential instructions that run shell commands
@@ -57,4 +56,7 @@ Actions:
         - Run: cd ./amazon-bedrock-token-profiling-web
         - Run: chmod +x deploy_stack.sh
         - Run: ./deploy_stack.sh
-
+    Compute:
+      Type: EC2
+    DependsOn:
+      - CDKDeploy
