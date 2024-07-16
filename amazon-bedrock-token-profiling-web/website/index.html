@@ -1,263 +1,267 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Demo Site</title>
 
-		<!-- Bootstrap - Latest compiled and minified CSS -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demo Site</title>
 
-		<link rel="icon" type="image/png" href="images/favicon-16x16.png" sizes="16x16">  
-		<link rel="icon" type="image/png" href="images/favicon-32x32.png" sizes="32x32">  
-	</head>
+  <!-- Bootstrap - Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-	<body>
-<!-- 
+  <link rel="icon" type="image/png" href="images/favicon-16x16.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="images/favicon-32x32.png" sizes="32x32">
+</head>
+
+<body>
+  <!-- 
 	Modal Dialog for AWS Cognito User Pool and Application IDs
  -->
-		<div class="container">
-			<div class="modal fade" id="credentialsModal" tabindex="-1" role="dialog" 
-				aria-labelledby="credentialsModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<!-- Modal Header -->
-						<div class="modal-header">
-							<button type="button" class="close" 
-							data-dismiss="modal">
-							<span aria-hidden="true">&times;</span>
-							<span class="sr-only">Close</span>
-							</button>
-							<h4 class="modal-title" id="credentialsModalLabel">
-								Provide IDs for AWS Congnito User Pool and Application
-							</h4>
-						</div>
+  <div class="container">
+    <div class="modal fade" id="credentialsModal" tabindex="-1" role="dialog" aria-labelledby="credentialsModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+              <span class="sr-only">Close</span>
+            </button>
+            <h4 class="modal-title" id="credentialsModalLabel">
+              Provide IDs for AWS Congnito User Pool and Application
+            </h4>
+          </div>
 
-						<!-- Modal Body -->
-						<div class="modal-body">
-							<div role="form">
-								<div class="form-group">
-									<label for="cognitoUserPoolId">User Pool</label>
-									<input type="text" class="form-control"
-									id="cognitoUserPoolId" placeholder="Cognito User Pool ID"/>
-								</div>
-								<div class="form-group">
-									<label for="applicationId">Application</label>
-									<input type="text" class="form-control"
-									id="applicationId" placeholder="Application ID"/>
-								</div>
-								<div class="form-group">
-									<label for="apiURL">API URL</label>
-									<input type="text" class="form-control"
-									id="apiURL" placeholder="API URL"/>
-								</div>
-							</div>
-						</div>
+          <!-- Modal Body -->
+          <div class="modal-body">
+            <div role="form">
+              <div class="form-group">
+                <label for="cognitoUserPoolId">User Pool</label>
+                <input type="text" class="form-control" id="cognitoUserPoolId" placeholder="Cognito User Pool ID" />
+              </div>
+              <div class="form-group">
+                <label for="applicationId">Application</label>
+                <input type="text" class="form-control" id="applicationId" placeholder="Application ID" />
+              </div>
+              <div class="form-group">
+                <label for="apiURL">API URL</label>
+                <input type="text" class="form-control" id="apiURL" placeholder="API URL" />
+              </div>
+            </div>
+          </div>
 
-						<!-- Modal Footer -->
-						<div class="modal-footer">
-					<!-- <div class="btn-toolbar" role="toolbar"> -->
-							<button type="button" class="btn btn-default btn-left"
-								data-dismiss="modal">
-								Close
-							</button>
-							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal" onclick="clearCredentials()">
-								Forget
-							</button>
-							<button type="button" class="btn btn-primary btn-right" data-dismiss="modal" onclick="saveCredentials()">
-								Save
-							</button>
-					<!-- </div>		 -->
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-<!-- 
+          <!-- Modal Footer -->
+          <div class="modal-footer">
+            <!-- <div class="btn-toolbar" role="toolbar"> -->
+            <button type="button" class="btn btn-default btn-left" data-dismiss="modal">
+              Close
+            </button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clearCredentials()">
+              Forget
+            </button>
+            <button type="button" class="btn btn-primary btn-right" data-dismiss="modal" onclick="saveCredentials()">
+              Save
+            </button>
+            <!-- </div>		 -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 
 	Modal Dialog for adding a new User
  -->
-		<div class="container">
-			<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" 
-				aria-labelledby="addUserModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<!-- Modal Header -->
-						<div class="modal-header">
-							<button type="button" class="close" 
-							data-dismiss="modal">
-							<span aria-hidden="true">&times;</span>
-							<span class="sr-only">Close</span>
-							</button>
-							<h4 class="modal-title" id="addUserModalLabel">
-								Add a new user to the User Pool
-							</h4>
-						</div>
+  <div class="container">
+    <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+              <span class="sr-only">Close</span>
+            </button>
+            <h4 class="modal-title" id="addUserModalLabel">
+              Add a new user to the User Pool
+            </h4>
+          </div>
 
-						<!-- Modal Body -->
-						<div class="modal-body">
-							<div role="form">
-								<div class="form-group" id="userNameDiv">
-									<label for="userName">User name</label>
-									<input type="text" class="form-control" id="userName" placeholder="Enter user name">
-								</div>
-								<div class="form-group" id="userEmailDiv">
-									<label for="userEmail">Email address</label>
-									<input type="email" class="form-control" id="userEmail" aria-describedby="emailHelp" placeholder="Enter email">
-								</div>
-								<div class="form-group" id="confirmationCode" hidden>
-									<label for="userConfirmationCode">Confirmation code</label>
-									<input type="text" class="form-control" id="userConfirmationCode" placeholder="Enter confirmation code">		  	
-								</div>
-								<div class="form-group" id="userPasswordDiv">
- 									<label for="userPassword" id="passwordLabel">Password</label>
- 									<input type="password" class="form-control" id="userPassword" placeholder="Enter password">
-									<input type="checkbox" class="form-check-input" id="showPasswordCheckbox" onclick="toggleShowPassword('showPasswordCheckbox', 'userPassword')">
-									<label class="form-check-label" for="showPasswordCheckbox">show</label>	
-								</div>
-								<div class="form-group" id="userNewPasswordDiv">
- 									<label for="newUserPassword">New Password</label>
- 									<input type="password" class="form-control" id="newUserPassword" placeholder="Enter password">
-									<input type="checkbox" class="form-check-input" id="showNewPasswordCheckbox" onclick="toggleShowPassword('showNewPasswordCheckbox', 'newUserPassword')">
-									<label class="form-check-label" for="showNewPasswordCheckbox">show</label>	
-								</div>
-							</div>
-						</div>
+          <!-- Modal Body -->
+          <div class="modal-body">
+            <div role="form">
+              <div class="form-group" id="userNameDiv">
+                <label for="userName">User name</label>
+                <input type="text" class="form-control" id="userName" placeholder="Enter user name">
+              </div>
+              <div class="form-group" id="userEmailDiv">
+                <label for="userEmail">Email address</label>
+                <input type="email" class="form-control" id="userEmail" aria-describedby="emailHelp"
+                  placeholder="Enter email">
+              </div>
+              <div class="form-group" id="confirmationCode" hidden>
+                <label for="userConfirmationCode">Confirmation code</label>
+                <input type="text" class="form-control" id="userConfirmationCode" placeholder="Enter confirmation code">
+              </div>
+              <div class="form-group" id="userPasswordDiv">
+                <label for="userPassword" id="passwordLabel">Password</label>
+                <input type="password" class="form-control" id="userPassword" placeholder="Enter password">
+                <input type="checkbox" class="form-check-input" id="showPasswordCheckbox"
+                  onclick="toggleShowPassword('showPasswordCheckbox', 'userPassword')">
+                <label class="form-check-label" for="showPasswordCheckbox">show</label>
+              </div>
+              <div class="form-group" id="userNewPasswordDiv">
+                <label for="newUserPassword">New Password</label>
+                <input type="password" class="form-control" id="newUserPassword" placeholder="Enter password">
+                <input type="checkbox" class="form-check-input" id="showNewPasswordCheckbox"
+                  onclick="toggleShowPassword('showNewPasswordCheckbox', 'newUserPassword')">
+                <label class="form-check-label" for="showNewPasswordCheckbox">show</label>
+              </div>
+            </div>
+          </div>
 
-						<!-- Modal Footer -->
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default"
-								data-dismiss="modal">
-								Close
-							</button>
-							<button type="button" id="modalFormButton" class="btn btn-primary" onclick="modalFormEnter()">
-								Sign Up
-							</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-<!-- 
+          <!-- Modal Footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              Close
+            </button>
+            <button type="button" id="modalFormButton" class="btn btn-primary" onclick="modalFormEnter()">
+              Sign Up
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 
 	Navigation Bar 
 -->
-		<nav class="navbar navbar-inverse">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="#">Demo Site</a>
-				</div>
-				<ul class="nav navbar-nav navbar-right">
-					<li><a id="credentialsLink" title="Click to enter credentials"
-						href="#" onclick="inputCredentials();return false;"><span class="glyphicon glyphicon-lock"></span> Credentials</a></li>
-				</ul>
-			</div>
-		</nav> 
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Demo Site</a>
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a id="credentialsLink" title="Click to enter credentials" href="#"
+            onclick="inputCredentials();return false;"><span class="glyphicon glyphicon-lock"></span> Credentials</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 
-<!-- 
+  <!-- 
 	User Info
  -->
-		<div class="container" id="usersHeader">
-			<div class="btn-toolbar" role="toolbar">
-			  <div class="dropdown">
-			    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">Action 
-			    <span class="caret"></span></button>
-			    <ul class="dropdown-menu">
-			      <li><a href="#" onclick="actionSignInUser();return false;">Sign In</a></li>
-			      <li><a href="#" onclick="actionSignOutUser();return false;">Sign Out</a></li>   
-			    </ul>
-			  </div>
-			</div>
-<!-- 
+  <div class="container" id="usersHeader">
+    <div class="btn-toolbar" role="toolbar">
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">Action
+          <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+          <li><a href="#" onclick="actionSignInUser();return false;">Sign In</a></li>
+          <li><a href="#" onclick="actionSignOutUser();return false;">Sign Out</a></li>
+        </ul>
+      </div>
+    </div>
+    <!-- 
 	User Table
  -->
-			 <table class="table" id="userTable">
-			 	<thead class="thead-light"> 
-			 		<tr>
-			 			<th>ID</th>
-						<th>Name</thth>
-			 			<th>Email</th>
-			 		</tr>
-			 	</thead>
-			 	<tbody>
-			 		<tr>
-			 			<td id="userNameCell"></td>
-						<td id="userNickNameCell"></td>
-			 			<td id="userEmailCell"></td>
-			 		</tr>
-			 	</tbody>
-			 </table>
-<!-- 
+    <table class="table" id="userTable">
+      <thead class="thead-light">
+        <tr>
+          <th>ID</th>
+          <th>Name</thth>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td id="userNameCell"></td>
+          <td id="userNickNameCell"></td>
+          <td id="userEmailCell"></td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- 
 	Alerts
  -->
-			<div class="alert alert-danger" id="operationAlert" hidden>
-				<button type="button" class="close" onclick="closeAlertMessage()">&times;</button>
-			    <span></span> 
-			</div>
-<!-- 
+    <div class="alert alert-danger" id="operationAlert" hidden>
+      <button type="button" class="close" onclick="closeAlertMessage()">&times;</button>
+      <span></span>
+    </div>
+    <!-- 
 	Bedrock input section
- -->			
- 			<div id="bedrock" style="display: none;">
-				<form method="POST" name="bedrock-invoke" action="javascript: invokeModel()">
-					<!--<input type="radio" name="model-id" value="amazon.titan-text-express-v1"> Amazon Titan Express v1
+ -->
+    <div id="bedrock" style="display: none;">
+      <form method="POST" name="bedrock-invoke" action="javascript: invokeModel()">
+        <!--<input type="radio" name="model-id" value="amazon.titan-text-express-v1"> Amazon Titan Express v1
 					<input type="radio" name="model-id" value="anthropic.claude-3-sonnet-20240229-v1:0"> Anthropic Claude3 Sonnet-->
-					<select id="model-id" name="model-id">
-						<option value="amazon.titan-text-express-v1">Amazon Titan Express v1</option>
-						<option value="anthropic.claude-3-sonnet-20240229-v1:0">Anthropic Claude3 Sonnet</option>
-					</select>
-					<br><br>
-					<input type="text" id="bedrock-text" placeholder="Input your question" size="32"/></br></br>
-					<input type="submit" name='bttn' value="Submit" />
-				</form>	
-			</div>
-<!-- 
+        <select id="model-id" name="model-id">
+          <option value="amazon.titan-text-express-v1">Amazon Titan Express v1</option>
+          <option value="anthropic.claude-3-sonnet-20240229-v1:0">Anthropic Claude3 Sonnet</option>
+        </select>
+        <br><br>
+        <input type="text" id="bedrock-text" placeholder="Input your question" size="32" /></br></br>
+        <input type="submit" name='bttn' value="Submit" />
+      </form>
+      <p></p>
+      <p><b>The Response from Amazon Bedrock</b></p>
+      <p id="bedrock-result"></p>
+    </div>
+    <!-- 
 	Bedrock cost track
- -->		
- 			<div id="bedrock-cost-calculate" style="display: none; float: left">
-				<form method="POST" name="bedrock-cost-calculate" action="javascript: cost_track_manual()">
-					<input type="submit" name='bttn' value="Manually aggregate the metrics" />
-				</form>	
-			</div>
-			<p>&nbsp;&nbsp;</p>
-			<div id="bedrock-cost" style="display: none; float: left">
-				<form method="POST" name="bedrock-cost-trigger" action="javascript: ddb_cost_retrieval()">
-					<input type="submit" name='bttn' value="Check the cost" />
-				</form>	
-			</div>
+ -->
+    <div id="bedrock-cost-calculate" style="display: none; float: left">
+      <form method="POST" name="bedrock-cost-calculate" action="javascript: cost_track_manual()">
+        <input type="submit" name='bttn' value="Manually aggregate the metrics" />
+      </form>
+    </div>
+    <p>&nbsp;&nbsp;</p>
+    <div id="bedrock-cost" style="display: none; float: left">
+      <form method="POST" name="bedrock-cost-trigger" action="javascript: ddb_cost_retrieval()">
+        <input type="submit" name='bttn' value="Check the cost" />
+      </form>
+    </div>
 
-			<div id="loading" style="display: none;">
-				<br>
-				<h3>Loading.....</h3>
-			</div>
-<!-- 
+    <div id="loading" style="display: none;">
+      <br>
+      <h3>Loading.....</h3>
+    </div>
+    <!-- 
 	Cost Table
  -->
-			<table class="table" id="costTable" style="display: none; float: left">
-				<thead class="thead-light"> 
-					<tr>
-						<th>Name</th>
-						<th>Model ID</th>
-						<th>Input Tokens</th>
-						<th>Output Tokens</th>
-						<th>Input Cost</th>
-						<th>Output Cost</th>
-						<th>Date</th>
-					</tr>
-				</thead>
-				<tbody id="cost-detail">
-				</tbody>
-			</table>
-		</div> <!-- /container -->
+    <table class="table" id="costTable" style="display: none; float: left">
+      <thead class="thead-light">
+        <tr>
+          <th>Name</th>
+          <th>Model ID</th>
+          <th>Input Tokens</th>
+          <th>Output Tokens</th>
+          <th>Input Cost</th>
+          <th>Output Cost</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody id="cost-detail">
+      </tbody>
+    </table>
+  </div> <!-- /container -->
 
-		<!-- Bootstrap's JavaScript dependencies -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-		
-		<!-- Cognito User Pool related code -->
-		<script type="text/javascript" src="js/amazon-cognito-identity.min.js"></script>
-		<script type="text/javascript" src="js/authentication.js"></script>
-		<script type="text/javascript" src="js/user-interface.js"></script>
-	</body>
+  <!-- Bootstrap's JavaScript dependencies -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+
+  <!-- Cognito User Pool related code -->
+  <script type="text/javascript" src="js/amazon-cognito-identity.min.js"></script>
+  <script type="text/javascript" src="js/authentication.js"></script>
+  <script type="text/javascript" src="js/user-interface.js"></script>
+</body>
+
 </html>
 
 
