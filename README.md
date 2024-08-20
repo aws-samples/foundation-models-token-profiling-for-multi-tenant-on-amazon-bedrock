@@ -32,7 +32,7 @@ pip install -r requirements.txt
 ```
 
 
-3. Deploy the core components. After deploy successfully, your API URL will show in the output. Please record it for later use. 
+3. Deploy the core components. Make sure this EC2 have required permission for deployment. After deploy successfully, your API URL will show in the output. Please record it for later use. 
 ```
 chmod +x deploy_stack.sh
 ./deploy_stack.sh
