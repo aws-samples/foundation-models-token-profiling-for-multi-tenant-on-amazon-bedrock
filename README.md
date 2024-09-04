@@ -9,7 +9,7 @@
 ### Deployment
 1. Install the required module
 ```
-cd ./amazon-bedrock-token-profiling-for-multi-tenant/amazon-bedrock-token-profiling-core
+cd ./foundation-models-token-profiling-for-multi-tenant-on-amazon-bedrock/amazon-bedrock-token-profiling-core
 pip install -r requirements.txt
 ```
 
@@ -31,13 +31,13 @@ pip install -r requirements.txt
 ]
 ```
 
-
 3. Deploy the core components. Make sure this EC2 have required permission for deployment. After deploy successfully, your API URL will show in the output. Please record it for later use. 
 ```
 chmod +x deploy_stack.sh
 ./deploy_stack.sh
 ```
 The core components includes the following resources:
+
 * VPC endpoints and networking configuration
 * IAM role
 * Cognito user pool with app client
@@ -65,53 +65,68 @@ The demo website components includes the following resources:
 
 ![cognito user pool 1](images/cognito-user-pool-1.png)
 
-7. Click into the cognito user pool record its user pool id, app client id for later used.
+7. Click into the cognito user pool record its user pool id, app client id for later used. The information of app client id will be in App integration tab in Cognito.
 
 ![cognito user pool 2](images/cognito-user-pool-2.png)
 
 ![cognito user pool 3](images/cognito-user-pool-3.png)
 
-8. Create the users by yourself. You need to create two general users and one admin user id with the email `admin@amazon.com` for later demo used.
+8. Create the users by yourself. You need to create several general users for differnt tenants and one admin user id with the email `admin@amazon.com` for later demo used. Remember to click "Makr email address as verified" during create user. For example, if we want to test two different tenants, this step will be repeated three times including admin user. You could randomly use the temporary password because this password will be reset later.
 
 ![cognito user pool 4](images/cognito-user-pool-4.png)
 
-9. Navigate to the [CloudFront Distribution](https://us-east-1.console.aws.amazon.com/cloudfront/v4/home?region=us-east-1#/distributions), you should see a distrubution be created and named with your prefix in the beginning. 
+9. The confirmation status of each user should be updated from status "Force change password" to "Confirmed". The following command will be used to reset the status. This step will be repeated to every users, and you need to remember each user's password.
+```
+aws cognito-idp admin-set-user-password --user-pool-id <Cognito User Pool ID> --username <Cognito User Name> --password <Cognito User Passowrd> --permanent
+```
 
-10. Copy the distribution domain name then open in your browser. You can see the demo website.
+![cognito user pool 5](images/cognito-user-pool-5.png)
+
+10. You could check the "Confirmation status" field in Cognito UI and make sure the status of every users.
+
+![cognito user pool 6](images/cognito-user-pool-6.png)
+
+11. Finally, the status of all users is "Confirmed".
+
+![cognito user pool 7](images/cognito-user-pool-7.png)
+
+12. Navigate to the [CloudFront Distribution](https://us-east-1.console.aws.amazon.com/cloudfront/v4/home?region=us-east-1#/distributions), you should see a distrubution be created and named with your prefix in the beginning. 
+
+13. Copy the distribution domain name then open in your browser. You can see the demo website.
 
 ![cloudfront](images/cloudfront.png)
 
 ![website-index](images/website-index.png)
 
-11. On the demo website, click the **Credential** button on the top-right. Then field your user pool id, app client id and api url. Then click save.
+14. On the demo website, click the **Credential** button on the top-right. Then field your user pool id, app client id and api url. Then click save.
 
 ![website-credential](images/website-credential.png)
 
-12. Expand the action menu on the top-left. Select **sign in** to login. You will see some basic information if login successfully.
+15. Expand the action menu on the top-left. Select **sign in** to login. You will see some basic information if login successfully. If you got some error messages in the first time to Sign in after deployment, you could try again due to cold start of Lambda functions.
 
 ![website-login](images/website-login.png)
 
-13. You can type the question in the text field to check the response.
+16. You can type the question in the text field to check the response.
 
 ![website-invoke-model](images/website-invoke-model.png)
 
-14. If you would like to check the cost for each user, you need to login as admin user.
+17. If you would like to check the cost for each user, you need to login as admin user.
 
-15. As you login as admin, you can see the **Manually aggregate the metrics** and **Check the cost** buttons.
+18. As you login as admin, you can see the **Manually aggregate the metrics** and **Check the cost** buttons.
 
 ![website-login-admin](images/website-login-admin.png)
 
-16. Click **Manually aggregate the metrics** button to aggregate the cost, you should see the "Calculation Finished" message.
+19. Click **Manually aggregate the metrics** button to aggregate the cost, you should see the "Calculation Finished" message.
 
 ![website-aggregate-cost](images/website-aggregate-cost.png)
 
-17. Click **Check the cost** button to check the results.
+20. Click **Check the cost** button to check the results.
 
 ![website-check-cost](images/website-check-cost.png)
 
 ### Experiance with API
 
-1. Please download the [Postman](https://www.postman.com/downloads/) for experiancing.
+1. You could use [Postman](https://www.postman.com/downloads/) or use [curl](https://github.com/curl/curl) command for experiancing.
 
 2. Let's try the **invoke_model** api first.  For this solution, you can invoke two models from Amazon Bedrock by the following model ids.
 
@@ -120,19 +135,43 @@ The demo website components includes the following resources:
 - anthropic.claude-3-sonnet-20240229-v1:0
 
 
-3. Create a POST request on Postman and paste the API URL. The URL should be `https://{API URL}/invoke_model?model_id={model_id}`.
+3. Prepare the POST request on Postman and paste the API URL. The URL should be `https://{API URL}/invoke_model?model_id={model_id}`.
 
-4. Put the **Auth*** in the header. Paste the id token you got from the Cognito after login.
+4. Get the value of **IdToken*** from browser developer tool. The value will be in the POST request with cognito-idp.<region>.amazonaws.com during user Sign in.
+
+![curl-00](images/curl-00.png)
+
+5. Or you would get the **IdToken** by using AWS CLI tool as following command:
+
+```
+aws cognito-idp initiate-auth --auth-flow USER_PASSWORD_AUTH --auth-parameters USERNAME=<Cognito User Name>,PASSWORD=<Cognito User Passowrd> --client-id <Cognito App Client ID>
+```
+
+![curl-01](images/curl-02.png)
+
+**PS.** If you want to use USER_PASSWORD_AUTH flow to generate token, you will need to select ALLOW_USER_PASSWORD_AUTH during editing App client in Cognito UI.
+
+![curl-01](images/curl-01.png)
+
+6. Put the value of **IdToken** of previous step into **Auth** in the header of request.
 
 ![postman-invoke-model-1](images/postman-invoke-model-1.png)
 
-5. Type the following body content then send the request. You will see the model response.
+7. Type the following body content then send the request. You will see the model response.
 
 ```
 {"inputs": "What is Amazon.com?", "parameters": {"maxTokenCount": 4096, "temperature": 0.8}}
 ```
 
 ![postman-invoke-model-2](images/postman-invoke-model-2.png)
+
+8. You would also use curl to test the POST request. Put the value of **IdToken** of previous steps into **Auth** header.
+
+```
+curl -i -X POST https://<API GATEWAY INVOKE URL>/invoke_model?model_id=<MODEL ID> -H 'Content-Type: application/json' -H 'Auth: <IdToken>' -d '{"inputs": "What is Amazon.com?", "parameters": {"maxTokenCount": 4096, "temperature": 0.8}}'
+```
+
+![curl-01](images/curl-03.png)
 
 6. You can change the model_id or auth for other users to check the different response.
 
@@ -147,6 +186,17 @@ The demo website components includes the following resources:
 `https://{API URL}/ddb_cost_retrieval`
 
 ![postman-ddb-cost-retrieval](images/postman-ddb-cost-retrieval.png)
+
+### Clean up
+```
+cd ./foundation-models-token-profiling-for-multi-tenant-on-amazon-bedrock/amazon-bedrock-token-profiling-web
+./destroy_stack.sh
+```
+```
+cd ./foundation-models-token-profiling-for-multi-tenant-on-amazon-bedrock/amazon-bedrock-token-profiling-core
+./destroy_stack.sh
+```
+
 
 ## Reference
 
