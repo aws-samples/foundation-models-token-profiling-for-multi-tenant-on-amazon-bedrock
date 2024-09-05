@@ -394,9 +394,7 @@ class BedrockAPIStack(Stack):
             burst_rate=self.api_burst_rate
         )
 
-        CfnOutput(self, f"{self.prefix_id}_api_gw_url", export_name=f"{self.prefix_id}ApiGatewayUrl", value=stage.url_for_path(path=None))
-        CfnOutput(self, f"{self.prefix_id}_api_gw_id", export_name=f"{self.prefix_id}ApiGatewayId", value=api_gw.rest_api_id)
-        CfnOutput(self, f"{self.prefix_id}_api_gw_resource_id", export_name=f"{self.prefix_id}ApiGatewayResourceId", value=api_gw.rest_api_root_resource_id)
+        CfnOutput(self, f"{self.prefix_id}_api_gw_url", export_name=f"{self.prefix_id}ApiGatewayUrl", value=stage.url_for_path(path=None)).override_logical_id('ApiGatewayUrl')
 
     def build_api_key(self):
         # ==================================================
@@ -416,7 +414,8 @@ class BedrockAPIStack(Stack):
             burst_rate=self.api_burst_rate
         )
 
-        CfnOutput(self, f"{self.prefix_id}_api_gw_url", export_name=f"{self.prefix_id}ApiGatewayUrl", value=stage.url_for_path(path=None))
+
+
 
 # ==================================================
 # ============== STACK WITH COST CENTER ============
