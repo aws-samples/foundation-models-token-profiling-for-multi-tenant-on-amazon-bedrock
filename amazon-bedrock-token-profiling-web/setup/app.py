@@ -13,7 +13,7 @@ from static_example.static_example_stack import StaticExampleStack
 
 
 app = cdk.App()
-StaticExampleStack(app, "StaticExampleStack",
+StaticExampleStack(app, "bedrock-saas-example-web",
     # If you don't specify 'env', this stack will be environment-agnostic.
     # Account/Region-dependent features and context lookups will not work,
     # but a single synthesized template can be deployed anywhere.
