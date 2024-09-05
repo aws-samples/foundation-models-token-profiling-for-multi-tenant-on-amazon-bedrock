@@ -6,8 +6,8 @@ from aws_cdk import (
     aws_cloudfront as cf,
     RemovalPolicy,
     aws_s3_deployment as s3deploy,
-    aws_cloudfront_origins as origins
-    # aws_sqs as sqs,
+    aws_cloudfront_origins as origins,
+    CfnOutput
 )
 from constructs import Construct
 
@@ -28,7 +28,7 @@ class StaticExampleStack(Stack):
                                   )
         oai = cf.OriginAccessIdentity( self,"My-OAI",comment="My OAI for the S3 Website")
         bucket.grant_read(oai)
-        cf.Distribution(self, "CDN",
+        cdn = cf.Distribution(self, "CDN",
                         default_root_object='index.html',
                         price_class=cf.PriceClass.PRICE_CLASS_ALL,
                         default_behavior=cf.BehaviorOptions(
@@ -42,5 +42,6 @@ class StaticExampleStack(Stack):
                             viewer_protocol_policy=cf.ViewerProtocolPolicy.ALLOW_ALL,
                             response_headers_policy=cf.ResponseHeadersPolicy.CORS_ALLOW_ALL_ORIGINS_WITH_PREFLIGHT,
                             cache_policy=cf.CachePolicy.CACHING_OPTIMIZED,
-                            allowed_methods=cf.AllowedMethods.ALLOW_GET_HEAD                                                                                          )
+                            allowed_methods=cf.AllowedMethods.ALLOW_GET_HEAD)
                         )
+        CfnOutput(self, "CloudfrontDomainName", value=cdn.distribution_domain_name)
