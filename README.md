@@ -196,10 +196,3 @@ cd ./foundation-models-token-profiling-for-multi-tenant-on-amazon-bedrock/amazon
 cd ./foundation-models-token-profiling-for-multi-tenant-on-amazon-bedrock/amazon-bedrock-token-profiling-core
 ./destroy_stack.sh
 ```
-
-
-## Reference
-
-* https://github.com/aws-samples/bedrock-multi-tenant-saas
-
-# amazon-bedrock-token-profiling-for-multi-tenant
