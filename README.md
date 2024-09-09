@@ -1,4 +1,23 @@
-# Amazon Bedrock Token Profiling For Multi Tenant
+# Amazon Bedrock Token Profiling for Multi-Tenant Environments
+
+This repository provides a scalable and cost-effective solution for implementing token profiling in multi-tenant environments using Amazon Bedrock. It addresses the unique challenges of multi-tenancy while offering robust usage and token cost tracking mechanisms.
+
+## Key Features
+
+- **Scalable Architecture**: Designed to handle multiple tenants efficiently.
+- **Cost-Effective**: Optimized for minimal resource usage without compromising performance.
+- **Granular Usage Tracking**: Detailed token usage and cost tracking for each tenant.
+- **Transparent Accountability**: Clear insights into resource consumption per tenant.
+
+## Purpose
+
+This solution aims to:
+
+1. Provide SaaS providers with accurate usage data for fair and competitive pricing.
+2. Empower businesses to offer tailored pricing models based on actual resource consumption.
+3. Ensure transparency and accountability in multi-tenant AI/ML applications.
+
+Whether you're building a SaaS platform or managing a multi-tenant environment, this repository offers the tools and best practices to effectively implement token profiling with Amazon Bedrock.
 
 ## Architecture
 
