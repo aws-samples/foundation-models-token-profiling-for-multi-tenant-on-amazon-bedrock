@@ -36,6 +36,10 @@ pip install -r requirements.txt
 chmod +x deploy_stack.sh
 ./deploy_stack.sh
 ```
+You could also get the output result from Outputs tab in CloudFormation stack, including API Gateway URL, Cognito User Pool ID, and Cognito Application Client ID.
+
+![api gateway resources](images/cloudformation-01.png)
+
 The core components includes the following resources:
 
 * VPC endpoints and networking configuration
@@ -56,6 +60,10 @@ The demo website components includes the following resources:
 * Cloudfront distribution
 * S3 bucket for web hosting
 * A demo website
+
+You could get the URL of demo website from the Outputs tab in CloudFormation stack and open this link directly.
+
+![api gateway resources](images/cloudformation-02.png)
 
 5. After deploy successfully, you can navigate to [API Gateway Console](https://us-east-1.console.aws.amazon.com/apigateway/main/apis?api=unselected&region=us-east-1) to check your API, the name would be  **[your stack prefix]_bedrock_api_gw**. You can found there are three resources for this API Gateway: invoke_model, cost_track_manual and ddb_cost_retrieval.  
 
