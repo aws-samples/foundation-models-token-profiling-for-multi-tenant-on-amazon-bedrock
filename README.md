@@ -195,7 +195,68 @@ curl -i -X POST https://<API GATEWAY INVOKE URL>/invoke_model?model_id=<MODEL ID
 
 ![postman-ddb-cost-retrieval](images/postman-ddb-cost-retrieval.png)
 
-### Clean up
+### HTTP API Spec
+
+This project uses the following API endpoints:
+
+1. Manual Cost Track
+   - **URL**: `https://{AMAZON_API_GATEWAY_URL}/{STAGE}/cost_track_manual`
+   - **Method**: POST
+
+2. Cost Retrieval
+   - **URL**: `https://{AMAZON_API_GATEWAY_URL}/{STAGE}/ddb_cost_retrieval`
+   - **Method**: POST
+   - **Response Schema**:
+     ```json
+     {
+       "date": "string",
+       "input_tokens": "string",
+       "output_tokens": "string",
+       "input_cost": "string",
+       "pk": "string",
+       "model_id": "string",
+       "output_cost": "string",
+       "invocations": "string",
+       "name": "string"
+     }
+     ```
+   - **Response Example**:
+     ```json
+     {
+       "date": "2024-07-16",
+       "input_tokens": "10.0",
+       "output_tokens": "282.0",
+       "input_cost": "2.9999999999999997e-05",
+       "pk": "tenant-2-anthropic.claude-3-sonnet-20240229-v1:0",
+       "model_id": "anthropic.claude-3-sonnet-20240229-v1:0",
+       "output_cost": "0.004229999999999999",
+       "invocations": "1.0",
+       "name": "tenant-2"
+     }
+     ```
+
+### Notes:
+- Replace `{AMAZON_API_GATEWAY_URL}` with the actual Amazon API Gateway URL provided to you.
+- Replace`{STAGE}` with the stage name in Amazon API Gateway.
+
+### Example Usage:
+
+```python
+import requests
+
+api_gateway_url = "your_api_gateway_url_here"
+stage = "kerrigan_prod"
+
+# Manual Cost Track API
+cost_track_url = f"https://{api_gateway_url}/{stage}/cost_track_manual"
+response = requests.post(cost_track_url, json=your_data)
+
+# Cost Retrieval API
+cost_retrieval_url = f"https://{api_gateway_url}/{stage}/ddb_cost_retrieval"
+response = requests.post(cost_retrieval_url, json=your_data)
+
+```
+## Clean up
 ```
 cd ./foundation-models-token-profiling-for-multi-tenant-on-amazon-bedrock/amazon-bedrock-token-profiling-web
 ./destroy_stack.sh
