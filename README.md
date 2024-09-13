@@ -254,6 +254,24 @@ This project uses the following API endpoints:
      }
      ```
 
+3. Invoke Model
+   - **URL**: `https://{AMAZON_API_GATEWAY_URL}/kerrigan_prod/invoke_model`
+   - **Method**: POST
+   - **Request Example**:
+     ```json
+     {
+       "inputs": "What is AWS?"
+     }
+     ```
+   - **Response Example**:
+     ```json
+     [
+       {
+         "generated_text": "Amazon is a massive technology company ..."
+       }
+     ]
+     ```
+
 ### Notes:
 - Replace `{AMAZON_API_GATEWAY_URL}` with the actual Amazon API Gateway URL provided to you.
 - Replace`{STAGE}` with the stage name in Amazon API Gateway.
